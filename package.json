@@ -1,0 +1,23 @@
+{
+  "name": "fresh",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run dev:css & npm run dev:js",
+    "dev:css": "npx @tailwindcss/cli -i ./web/assets/css/app.css -o ./web/static/css/styles.css --watch",
+    "dev:js": "node build.js --watch",
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "npx @tailwindcss/cli -i ./web/assets/css/app.css -o ./web/static/css/styles.css --minify",
+    "build:js": "node build.js",
+    "build:prod": "NODE_ENV=production npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.8",
+    "esbuild": "^0.25.5",
+    "tailwindcss": "^4.1.8"
+  }
+}

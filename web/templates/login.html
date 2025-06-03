@@ -1,0 +1,60 @@
+{{template "layout" .}}
+
+{{define "content"}}
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center mb-6">
+          <h2 class="text-3xl font-bold text-gray-900">Sign in to your account</h2>
+          <p class="mt-2 text-sm text-gray-600">Welcome back to Fresh</p>
+        </div>
+
+        {{if .Error}}
+        <div class="alert bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6" role="alert">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm">{{.Error}}</p>
+            </div>
+          </div>
+        </div>
+        {{end}}
+
+        <form method="POST" action="/login" class="space-y-6">
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email address</label>
+            <input type="email" class="form-input" id="email" name="email" required 
+              placeholder="Enter your email">
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <input type="password" class="form-input" id="password" name="password" required 
+              placeholder="Enter your password">
+          </div>
+
+          <div>
+            <button type="submit" class="btn-primary w-full">
+              Sign in
+            </button>
+          </div>
+        </form>
+
+        <div class="text-center mt-6">
+          <p class="text-sm text-gray-600">
+            Don't have an account? 
+            <a href="/register" class="font-medium text-primary-600 hover:text-primary-500 transition-colors">
+              Sign up here
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{end}}

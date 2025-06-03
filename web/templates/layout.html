@@ -1,0 +1,36 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <link href="/static/css/styles.css" rel="stylesheet">
+  </head>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <nav class="bg-primary-600 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <a href="/" class="text-white text-xl font-bold">Fresh</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+      {{template "content" .}}
+    </main>
+
+    <footer class="bg-white border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="text-center text-gray-500 text-sm">
+          <p>&copy; 2024 Fresh App. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/static/js/app.js"></script>
+  </body>
+</html>
+{{end}}
