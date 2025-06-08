@@ -94,8 +94,14 @@ Visit `http://localhost:3000` 🎉
 
 2. **Update imports in all Go files:**
    ```bash
-   # Find and replace 'fresh/' with 'myapp/'
-   find . -name "*.go" -exec sed -i 's/fresh\//myapp\//g' {} +
+   # Option 1: Using find with proper escaping
+   find . -name "*.go" -type f -exec sed -i 's|fresh/|myapp/|g' {} \;
+   
+   # Option 2: Using grep + xargs (more reliable)
+   grep -r -l "fresh/" --include="*.go" . | xargs sed -i 's|fresh/|myapp/|g'
+   
+   # Option 3: If you have ripgrep installed (fastest)
+   rg -l "fresh/" --type go | xargs sed -i 's|fresh/|myapp/|g'
    ```
 
 3. **Update package.json:**
@@ -178,7 +184,7 @@ npm run build
 ```
 
 **CSS (Tailwind):**
-- Source: `web/assets/css/styles.css`
+- Source: `web/assets/css/input.css`
 - Output: `web/static/css/styles.css`
 - Uses Tailwind CLI for processing
 
@@ -186,6 +192,16 @@ npm run build
 - Source: `web/assets/js/app.js`
 - Output: `web/static/js/app.js`
 - Uses esbuild for bundling
+
+**Custom Styles:**
+Add custom components in `web/assets/css/input.css`:
+```css
+@layer components {
+  .btn-custom {
+    @apply bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded;
+  }
+}
+```
 
 ## 📝 Adding New Features
 
@@ -266,10 +282,13 @@ make run          # Start normally
 make test         # Run tests
 make assets-dev   # Watch and rebuild assets
 
-# Database  
+# Database (uses DB_NAME, DB_USER, DB_HOST env vars or defaults)
 make db-create    # Create database
-make db-drop      # Drop database
+make db-drop      # Drop database  
 make db-reset     # Drop and recreate database
+
+# Override database settings:
+DB_NAME=myapp_dev DB_USER=myuser make db-create
 
 # Production
 make build        # Build optimized binary + assets

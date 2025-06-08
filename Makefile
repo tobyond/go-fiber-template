@@ -33,18 +33,23 @@ setup: db-create
 	@if [ ! -f .env ]; then cp .env.example .env 2>/dev/null || true; fi
 	@echo "Setup complete! Run 'make dev' to start development."
 
+# Database configuration - can be overridden with environment variables
+DB_NAME ?= freshgo
+DB_USER ?= postgres
+DB_HOST ?= localhost
+
 # Create database if it doesn't exist
 db-create:
-	@echo "Creating database 'freshgo' if it doesn't exist..."
-	@psql -U postgres -h localhost -tc "SELECT 1 FROM pg_database WHERE datname = 'freshgo'" | grep -q 1 || \
-	psql -U postgres -h localhost -c "CREATE DATABASE freshgo;"
-	@echo "Database 'freshgo' is ready."
+	@echo "Creating database '$(DB_NAME)' if it doesn't exist..."
+	@psql -U $(DB_USER) -h $(DB_HOST) -tc "SELECT 1 FROM pg_database WHERE datname = '$(DB_NAME)'" | grep -q 1 || \
+	psql -U $(DB_USER) -h $(DB_HOST) -c "CREATE DATABASE $(DB_NAME);"
+	@echo "Database '$(DB_NAME)' is ready."
 
 # Drop database
 db-drop:
-	@echo "Dropping database 'freshgo'..."
-	@psql -U postgres -h localhost -c "DROP DATABASE IF EXISTS freshgo;"
-	@echo "Database 'freshgo' dropped."
+	@echo "Dropping database '$(DB_NAME)'..."
+	@psql -U $(DB_USER) -h $(DB_HOST) -c "DROP DATABASE IF EXISTS $(DB_NAME);"
+	@echo "Database '$(DB_NAME)' dropped."
 
 # Reset database (drop and recreate)
 db-reset: db-drop db-create
